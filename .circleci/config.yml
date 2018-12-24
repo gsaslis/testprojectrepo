@@ -7,24 +7,27 @@ orbs:
 
 jobs:
   send_slack_status_update_on_failure:
+    docker:
+      - image: circleci/buildpack-deps:latest
     steps:
       - run: exit 1
       - slack/status:
-        fail_only: 'true'
-        webhook:  'https://hooks.slack.com/services/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'
-  
-  send_slack_status_update_on_failure_on_master_only:
-    steps:
-      - run: exit 1
-      - slack/status:
-        fail_only: 'true'
-        webhook:  'https://hooks.slack.com/services/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'
-        only_for_branch: master
+          fail_only: 'true'
+          webhook:  'https://hooks.slack.com/services/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'
 
-workflows: 
+  send_slack_status_update_on_failure_on_master_only:
+    docker:
+      - image: circleci/buildpack-deps:latest
+    steps:
+      - run: exit 1
+      - slack/status:
+          fail_only: 'true'
+          webhook:  'https://hooks.slack.com/services/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'
+          only_for_branch: master
+
+workflows:
   version: 2
   some_flow:
     jobs:
       - send_slack_status_update_on_failure
       - send_slack_status_update_on_failure_on_master_only
-
