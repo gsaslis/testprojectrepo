@@ -15,7 +15,6 @@ jobs:
       - run: exit 1
       - slack/status:
           fail_only: 'true'
-          webhook:  'https://hooks.slack.com/services/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'
 
   send_slack_status_update_on_failure_on_master_only:
     docker:
@@ -24,8 +23,9 @@ jobs:
       - run: exit 1
       - slack/status:
           fail_only: 'true'
-          webhook:  'https://hooks.slack.com/services/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'
           only_for_branch: master
+
+##################################### CIRCLECI WORKFLOWS ############################################
 
 workflows:
   version: 2
