@@ -5,6 +5,8 @@ version: 2.1
 orbs:
   slack: gsaslis/slack-orb@dev:branch-filters
 
+##################################### CIRCLECI JOBS ############################################
+
 jobs:
   send_slack_status_update_on_failure:
     docker:
