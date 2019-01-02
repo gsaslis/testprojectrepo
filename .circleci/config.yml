@@ -13,25 +13,27 @@ jobs:
       - image: circleci/buildpack-deps:latest
     steps:
       - run: exit 1
-    post-steps:
-      - slack/status:
-          fail_only: 'true'
-          webhook:  https://hooks.slack.com/services/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
 
   send_slack_status_update_on_failure_on_master_only:
     docker:
       - image: circleci/buildpack-deps:latest
     steps:
       - run: exit 1
-    post-steps:
-      - slack/status:
-          only_for_branch: master
-
+    
 ##################################### CIRCLECI WORKFLOWS ############################################
 
 workflows:
   version: 2
   some_flow:
     jobs:
-      - send_slack_status_update_on_failure
-      - send_slack_status_update_on_failure_on_master_only
+      - send_slack_status_update_on_failure:
+          post-steps:
+            - slack/status:
+                fail_only: 'true'
+                webhook:  https://hooks.slack.com/services/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
+      - send_slack_status_update_on_failure_on_master_only:
+          post-steps:
+            - slack/status:
+                only_for_branch: master
+
+
