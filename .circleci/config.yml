@@ -19,20 +19,59 @@ jobs:
       - image: circleci/buildpack-deps:latest
     steps:
       - run: exit 1
-    
+
+  successful_job:
+    docker:
+      - image: circleci/buildpack-deps:latest
+    steps:
+      - run: echo "I am very successful!"
+
+  notify_start:
+    docker:
+      - image: circleci/buildpack-deps
+    steps:
+      - slack/notify:
+          message: Build started on master, for $CIRCLE_PROJECT_USERNAME/$CIRCLE_PROJECT_REPONAME.
+          color: "#D3D3D3"
+
+  notify_success:
+    docker:
+      - image: circleci/buildpack-deps
+    steps:
+      - slack/notify:
+          message: All is well & green on $CIRCLE_BRANCH. Nothing to see here.
+          color: "#00B700"
+
 ##################################### CIRCLECI WORKFLOWS ############################################
 
 workflows:
   version: 2
-  some_flow:
+  failing_flow:
     jobs:
+      - notify_start
       - send_slack_status_update_on_failure:
+          requires:
+            - notify_start
           post-steps:
             - slack/status:
                 fail_only: 'true'
       - send_slack_status_update_on_failure_on_master_only:
+          requires:
+            - notify_start
           post-steps:
             - slack/status:
                 only_for_branch: master
+      - notify_success:
+          requires:
+            - send_slack_status_update_on_failure
+            - send_slack_status_update_on_failure_on_master_only
 
-
+  passing_flow:
+    jobs:
+      - notify_start
+      - successful_job:
+          requires:
+            - notify_start
+      - notify_success:
+          requires:
+            - successful_job
