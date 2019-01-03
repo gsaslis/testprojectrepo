@@ -10,25 +10,25 @@ orbs:
 jobs:
   send_slack_status_update_on_failure:
     docker:
-      - image: circleci/buildpack-deps:latest
+      - image: quay.io/3scale/system-builder
     steps:
       - run: exit 1
 
   send_slack_status_update_on_failure_on_master_only:
     docker:
-      - image: circleci/buildpack-deps:latest
+      - image: quay.io/3scale/system-builder
     steps:
       - run: exit 1
 
   successful_job:
     docker:
-      - image: circleci/buildpack-deps:latest
+      - image: quay.io/3scale/system-builder
     steps:
       - run: echo "I am very successful!"
 
   notify_start:
     docker:
-      - image: circleci/buildpack-deps
+      - image: quay.io/3scale/system-builder
     steps:
       - slack/notify:
           message: Build started on master, for $CIRCLE_PROJECT_USERNAME/$CIRCLE_PROJECT_REPONAME.
@@ -36,7 +36,7 @@ jobs:
 
   notify_success:
     docker:
-      - image: circleci/buildpack-deps
+      - image: quay.io/3scale/system-builder
     steps:
       - slack/notify:
           message: All is well & green on $CIRCLE_BRANCH. Nothing to see here.
