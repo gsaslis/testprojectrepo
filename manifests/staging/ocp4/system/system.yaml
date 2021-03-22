@@ -4,4 +4,4 @@ metadata:
   name: stg-saas-system
 spec:
   image:
-    tag: "custom-v2.10.0"
+    tag: some_tag1
