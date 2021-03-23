@@ -1,0 +1,7 @@
+apiVersion: saas.3scale.net/v1alpha1
+kind: System
+metadata:
+  name: stg-saas-system
+spec:
+  image:
+    tag: "custom-v2.10.0"
