@@ -4,4 +4,4 @@ metadata:
   name: stg-saas-zync
 spec:
   image:
-    tag: "custom-v2.10.0"
+    tag: 3scale-amp-2.11-rhel-7-containers-alpha-60472-20210330131358
